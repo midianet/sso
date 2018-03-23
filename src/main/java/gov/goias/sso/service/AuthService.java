@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
+import javax.persistence.EntityNotFoundException;
 import java.time.LocalDateTime;
 
 @Service
@@ -30,7 +31,7 @@ public class AuthService {
         //Optional.of(password).orElseThrow(() -> new IllegalArgumentException("password não informado"));
         Assert.notNull(username, "Usuário não informado");
         Assert.notNull(username, "Senha não informada");
-        Person person = userRepository.findUserByUsername(username).orElse(Person.builder().build());
+        Person person = userRepository.findUserByUsername(username).orElseThrow(EntityNotFoundException(String.format("Usuário %s", username));
         Assert.isTrue(password.equals(person.getPassword()),"Usuário e ou senha inválidos");
         String token = jwtUtil.generateToken(person);
         Auth auth = Auth.builder().token(token).date(LocalDateTime.now()).build();
