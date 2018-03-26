@@ -8,26 +8,26 @@ import javax.servlet.http.HttpServletResponse;
 
 public class CookieUtil {
 
-    public static void create(HttpServletResponse httpServletResponse, String name, String value, Boolean secure, Integer maxAge, String domain) {
+    public static void create(HttpServletResponse response, String name, String value, Boolean secure, Integer maxAge, String domain) {
         Cookie cookie = new Cookie(name, value);
         cookie.setSecure(secure);
         cookie.setHttpOnly(true);
         cookie.setMaxAge(maxAge);
         cookie.setDomain(domain);
         cookie.setPath("/");
-        httpServletResponse.addCookie(cookie);
+        response.addCookie(cookie);
     }
 
-    public static void clear(HttpServletResponse httpServletResponse, String name) {
+    public static void delete(HttpServletResponse response, String name) {
         Cookie cookie = new Cookie(name, null);
         cookie.setPath("/");
         cookie.setHttpOnly(true);
         cookie.setMaxAge(0);
-        httpServletResponse.addCookie(cookie);
+        response.addCookie(cookie);
     }
 
-    public static String getValue(HttpServletRequest httpServletRequest, String name) {
-        Cookie cookie = WebUtils.getCookie(httpServletRequest, name);
+    public static String token(HttpServletRequest request, String name) {
+        Cookie cookie = WebUtils.getCookie(request, name);
         return cookie != null ? cookie.getValue() : null;
     }
 

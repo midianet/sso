@@ -5,14 +5,17 @@ import io.jsonwebtoken.*;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
+import java.util.Optional;
 
 @Component
 public class JwtUtil {
-
-    @Value("${signingKey}")
-    private String signingKey;
+    
+    @Value("${cookie}")
+    private String token;
+    
+    @Value("${key}")
+    private String key;
 
     public String generateToken(Person person) {
         long nowMillis = System.currentTimeMillis();
@@ -21,19 +24,19 @@ public class JwtUtil {
         .setSubject(person.getName());
         c.put("email",person.getEmail());
         c.put("cpf",person.getCpf());
-        c.put("roles",person.getRoles().toArray());
+        c.put("authorities",person.getRoles().toArray());
         JwtBuilder builder = Jwts.builder()
-                .setIssuedAt(now)
-                .setHeaderParam(Header.TYPE,Header.JWT_TYPE)
-                .setClaims(c)
-                .signWith(SignatureAlgorithm.HS512, signingKey);
+            .setIssuedAt(now)
+            .setHeaderParam(Header.TYPE, Header.JWT_TYPE)
+            .setClaims(c)
+            .signWith(SignatureAlgorithm.HS512, key);
         return builder.compact();
     }
-//
-//    public static String getSubject(HttpServletRequest httpServletRequest, String jwtTokenCookieName, String signingKey){
-//        String token = CookieUtil.getValue(httpServletRequest, jwtTokenCookieName);
-//        if(token == null) return null;
-//        return Jwts.parser().setSigningKey(signingKey).parseClaimsJws(token).getBody().getSubject();
-//    }
 
+    public void validate(String token){
+        Optional.ofNullable(token).ifPresent(s ->{
+            Jwts.parser().setSigningKey(key).parseClaimsJws(token).getBody().getSubject();
+        });
+    }
+    
 }

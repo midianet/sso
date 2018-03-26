@@ -27,14 +27,12 @@ public class AuthService {
 
     @Transactional(rollbackFor = Exception.class)
     public Auth auth(String username, String password){
-        //Optional.of(username).orElseThrow(() -> new IllegalArgumentException("Usuário não informado"));
-        //Optional.of(password).orElseThrow(() -> new IllegalArgumentException("password não informado"));
         Assert.notNull(username, "Usuário não informado");
         Assert.notNull(username, "Senha não informada");
-        Person person = userRepository.findUserByUsername(username).orElseThrow(EntityNotFoundException(String.format("Usuário %s", username));
+        Person person = userRepository.findUserByUsername(username).orElseThrow(() -> new EntityNotFoundException(String.format("Usuário %s", username)));
         Assert.isTrue(password.equals(person.getPassword()),"Usuário e ou senha inválidos");
         String token = jwtUtil.generateToken(person);
-        Auth auth = Auth.builder().token(token).date(LocalDateTime.now()).build();
+        Auth auth = Auth.builder().token(token).person(person).date(LocalDateTime.now()).build();
         return authRepository.save(auth);
     }
 
@@ -42,9 +40,7 @@ public class AuthService {
     public void logout(String token){
         authRepository.findByToken(token).ifPresent(auth -> {
             authRepository.delete(auth);
-            System.out.println("move token to history");
         });
-
     }
 
 }
