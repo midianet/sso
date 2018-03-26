@@ -3,6 +3,7 @@ package gov.goias.sso.service;
 import gov.goias.sso.JwtUtil;
 import gov.goias.sso.domain.Auth;
 import gov.goias.sso.domain.Person;
+import gov.goias.sso.domain.UserAgent;
 import gov.goias.sso.repository.AuthRepository;
 import gov.goias.sso.repository.PersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,12 +27,12 @@ public class AuthService {
     private JwtUtil jwtUtil;
 
     @Transactional(rollbackFor = Exception.class)
-    public Auth auth(String username, String password){
+    public Auth auth(String username, String password, UserAgent agent){
         Assert.notNull(username, "Usuário não informado");
         Assert.notNull(username, "Senha não informada");
-        Person person = userRepository.findUserByUsername(username).orElseThrow(() -> new EntityNotFoundException(String.format("Usuário %s", username)));
+        Person person = userRepository.findUserByUsername(username).orElseThrow(() -> new EntityNotFoundException(String.format("Usuário e ou senha inválidos")));
         Assert.isTrue(password.equals(person.getPassword()),"Usuário e ou senha inválidos");
-        String token = jwtUtil.generateToken(person);
+        String token = jwtUtil.generateToken(person, agent);
         Auth auth = Auth.builder().token(token).person(person).date(LocalDateTime.now()).build();
         return authRepository.save(auth);
     }

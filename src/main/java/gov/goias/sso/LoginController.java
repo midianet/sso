@@ -1,17 +1,16 @@
 package gov.goias.sso;
 
 import gov.goias.sso.domain.Auth;
-import gov.goias.sso.domain.Person;
+import gov.goias.sso.domain.UserAgent;
+import gov.goias.sso.repository.AuthRepository;
 import gov.goias.sso.service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
-import javax.persistence.EntityNotFoundException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -20,7 +19,7 @@ import javax.servlet.http.HttpServletResponse;
 public class LoginController {
 
     @Value("${cookie}")
-    private String token;
+    private String tokenName;
 
     @Value("${key}")
     private String key;
@@ -31,6 +30,9 @@ public class LoginController {
     @Autowired
     private AuthService authService;
 
+    @Autowired
+    private AuthRepository authRepository;
+
     @GetMapping("/")
     public String home(){
         return "redirect:/login";
@@ -38,7 +40,13 @@ public class LoginController {
 
     @GetMapping("/login")
     public String login(){
-        return StringUtils.isEmpty(CookieUtil.token(request, token)) ? "login" : "redirect:/authenticated";
+        String token = CookieUtil.token(request, tokenName);
+        if(!StringUtils.isEmpty(token)){
+            if(authRepository.findByToken(token).isPresent()) {
+                return "redirect:/authenticated";
+            }
+        }
+        return "login";
     }
 
     @GetMapping("/authenticated")
@@ -48,16 +56,17 @@ public class LoginController {
 
     @GetMapping("/logout")
     public String logout(HttpServletRequest request , HttpServletResponse response){
-        authService.logout(CookieUtil.token(request, token));
-        CookieUtil.delete(response, token);
+        authService.logout(CookieUtil.token(request, tokenName));
+        CookieUtil.delete(response, tokenName);
         return "redirect:/login";
     }
 
     @PostMapping("/login")
-    public String login(HttpServletResponse httpServletResponse, String username, String password, String redirect, Model model){
+    public String login(String username, String password, HttpServletRequest request, HttpServletResponse response, String redirect, Model model){
         try {
-            Auth auth = authService.auth(username, password);
-            CookieUtil.create(httpServletResponse, token, auth.getToken(), false, 2147483647, "localhost");
+            UserAgent agent = new UserAgentUtil().create(request);
+            Auth auth = authService.auth(username, password, agent);
+            CookieUtil.create(response, tokenName, auth.getToken(), false, 2147483647, "localhost");
             return "redirect:" + (StringUtils.isEmpty(redirect) ? "/authenticated" : redirect);
         }catch (IllegalArgumentException e){
             model.addAttribute("error", "Usuário e ou senha inválidos!");

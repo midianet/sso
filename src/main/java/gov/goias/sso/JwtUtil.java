@@ -1,6 +1,7 @@
 package gov.goias.sso;
 
 import gov.goias.sso.domain.Person;
+import gov.goias.sso.domain.UserAgent;
 import io.jsonwebtoken.*;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -17,13 +18,18 @@ public class JwtUtil {
     @Value("${key}")
     private String key;
 
-    public String generateToken(Person person) {
+    public String generateToken(Person person, UserAgent agent) {
         long nowMillis = System.currentTimeMillis();
         Date now = new Date(nowMillis);
         Claims c = Jwts.claims()
         .setSubject(person.getName());
         c.put("email",person.getEmail());
         c.put("cpf",person.getCpf());
+        c.put("data", new Date());
+        c.put("client",agent.getClient());
+        c.put("browser", agent.getBrowser());
+        c.put("so", agent.getSo());
+        c.put("ip", agent.getIp());
         c.put("authorities",person.getRoles().toArray());
         JwtBuilder builder = Jwts.builder()
             .setIssuedAt(now)
