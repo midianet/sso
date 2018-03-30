@@ -131,7 +131,7 @@
         </div>
         <div class="form">
             <div class="thumbnail"><img src="img/user.png"/></div>
-            <form method="POST" class="login-form" action="/login?redirect=${RequestParameters.redirect!}">
+            <form method="POST" class="login-form" action="login?redirect=${RequestParameters.redirect!}">
                 <h2>Log in</h2>
                 <input name="username" type="text" placeholder="Username" autofocus="true"/>
                 <input name="password" type="password" placeholder="Password"/>

@@ -135,7 +135,7 @@
                 Você já esta logado.
             </div>
             <div class="row" style="margin-top: 30px">
-                <a href="/logout">
+                <a href="logout">
                     <div>
                         <img style="width: 50px; height: 50px;" src="img/sair.jpg"/>
                     </div>
