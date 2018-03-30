@@ -23,6 +23,9 @@ public class LoginController {
 
     @Value("${key}")
     private String key;
+    
+    @Value("${auth-domain}")
+    private String domain;
 
     @Autowired
     private HttpServletRequest request;
@@ -66,7 +69,7 @@ public class LoginController {
         try {
             UserAgent agent = new UserAgentUtil().create(request);
             Auth auth = authService.auth(username, password, agent);
-            CookieUtil.create(response, tokenName, auth.getToken(), false, 2147483647, "latinowarego.org");
+            CookieUtil.create(response, tokenName, auth.getToken(), false, 2147483647, domain);
             return "redirect:" + (StringUtils.isEmpty(redirect) ? "/authenticated" : redirect);
         }catch (IllegalArgumentException e){
             model.addAttribute("error", "Usuário e ou senha inválidos!");

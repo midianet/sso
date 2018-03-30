@@ -69,6 +69,7 @@
                 <activatedProperties>dev</activatedProperties>
                 <app-datasource-username>postgres</app-datasource-username>
                 <app-datasource-password>postgres</app-datasource-password>
+                <auth-domain>localhost</auth-domain>
             </properties>
             <activation>
                 <activeByDefault>true</activeByDefault>
@@ -80,6 +81,7 @@
                 <activatedProperties>prod</activatedProperties>
                 <app-datasource-username>sso-user</app-datasource-username>
                 <app-datasource-password>P@$w00rd</app-datasource-password>
+                <auth-domain>latinowarego.org</auth-domain>
             </properties>
             <dependencies>
                 <dependency>
