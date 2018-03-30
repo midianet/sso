@@ -1,4 +1,4 @@
-package gov.goias.sso.resource;
+package midianet.sso.resource;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

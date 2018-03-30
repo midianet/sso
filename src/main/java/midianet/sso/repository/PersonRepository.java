@@ -1,6 +1,6 @@
-package gov.goias.sso.repository;
+package midianet.sso.repository;
 
-import gov.goias.sso.domain.Person;
+import midianet.sso.domain.Person;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.Optional;

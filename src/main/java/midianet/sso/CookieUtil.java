@@ -1,4 +1,4 @@
-package gov.goias.sso;
+package midianet.sso;
 
 import org.springframework.web.util.WebUtils;
 

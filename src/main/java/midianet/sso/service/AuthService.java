@@ -1,11 +1,11 @@
-package gov.goias.sso.service;
+package midianet.sso.service;
 
-import gov.goias.sso.JwtUtil;
-import gov.goias.sso.domain.Auth;
-import gov.goias.sso.domain.Person;
-import gov.goias.sso.domain.UserAgent;
-import gov.goias.sso.repository.AuthRepository;
-import gov.goias.sso.repository.PersonRepository;
+import midianet.sso.JwtUtil;
+import midianet.sso.domain.Auth;
+import midianet.sso.domain.Person;
+import midianet.sso.domain.UserAgent;
+import midianet.sso.repository.AuthRepository;
+import midianet.sso.repository.PersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

@@ -1,7 +1,7 @@
-package gov.goias.sso;
+package midianet.sso;
 
-import gov.goias.sso.domain.Person;
-import gov.goias.sso.domain.UserAgent;
+import midianet.sso.domain.Person;
+import midianet.sso.domain.UserAgent;
 import io.jsonwebtoken.*;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;

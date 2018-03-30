@@ -1,9 +1,9 @@
-package gov.goias.sso;
+package midianet.sso;
 
-import gov.goias.sso.domain.Auth;
-import gov.goias.sso.domain.UserAgent;
-import gov.goias.sso.repository.AuthRepository;
-import gov.goias.sso.service.AuthService;
+import midianet.sso.domain.Auth;
+import midianet.sso.domain.UserAgent;
+import midianet.sso.repository.AuthRepository;
+import midianet.sso.service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;

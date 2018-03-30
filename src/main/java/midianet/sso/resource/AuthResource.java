@@ -1,9 +1,8 @@
-package gov.goias.sso.resource;
+package midianet.sso.resource;
 
-import gov.goias.sso.repository.AuthRepository;
+import midianet.sso.repository.AuthRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.EntityNotFoundException;

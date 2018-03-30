@@ -1,6 +1,6 @@
-package gov.goias.sso;
+package midianet.sso;
 
-import gov.goias.sso.domain.UserAgent;
+import midianet.sso.domain.UserAgent;
 
 import javax.servlet.http.HttpServletRequest;
 

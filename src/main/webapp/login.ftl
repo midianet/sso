@@ -5,7 +5,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
         <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.css"/>
         <link rel="stylesheet" href="node_modules/font-awesome/css/font-awesome.css" >
-        <title>SSO Segplan</title>
+        <title>SSO Midianet</title>
         <style>
             .form {
                 position: relative;
@@ -126,7 +126,7 @@
     <body>
         <div class="container">
             <div class="info">
-                <h1>SSO - Segplan</h1>
+                <h1>SSO - Midianet</h1>
             </div>
         </div>
         <div class="form">

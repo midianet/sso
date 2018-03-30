@@ -1,4 +1,4 @@
-package gov.goias.sso.domain;
+package midianet.sso.domain;
 
 import lombok.Builder;
 import lombok.Data;
