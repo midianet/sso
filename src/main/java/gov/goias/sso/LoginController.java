@@ -66,7 +66,7 @@ public class LoginController {
         try {
             UserAgent agent = new UserAgentUtil().create(request);
             Auth auth = authService.auth(username, password, agent);
-            CookieUtil.create(response, tokenName, auth.getToken(), false, 2147483647, "localhost");
+            CookieUtil.create(response, tokenName, auth.getToken(), false, 2147483647, "latinowarego.org");
             return "redirect:" + (StringUtils.isEmpty(redirect) ? "/authenticated" : redirect);
         }catch (IllegalArgumentException e){
             model.addAttribute("error", "Usuário e ou senha inválidos!");
